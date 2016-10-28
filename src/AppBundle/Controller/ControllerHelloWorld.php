@@ -7,18 +7,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class DefaultController extends Controller
+class ControllerHelloWorld extends Controller
 {
-    /**
-     * @Route("/", name="homepage")
+     /**
+     * @Route("/helloWorld", name="helloworld")
      */
-    public function indexAction(Request $request)
+    public function helloWorld()
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
+        // return new Response(
+        //     '<html><body> Hello World ! </body></html>'
+        // );
+        return $this->render('tests/helloWorld.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
         ]);
-    }
 
-    
+    }
 }
