@@ -17,6 +17,7 @@ class ControllerHelloWorld extends Controller
         // return new Response(
         //     '<html><body> Hello World ! </body></html>'
         // );
+        $em = $this->getDoctrine()->getManager();
         return $this->render('tests/helloWorld.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
         ]);
