@@ -6,4 +6,10 @@
 
 {% block body %}
 <input type="button" name="ajout" value="Ajouter" onclick="ajouter()">
+<ul>
+{% for task in tasks %}
+<li>{{task.id}} {{task.name}}</li>
+{% endfor %}
+</ul>
+<!-- {{dump(tasks)}}>
 {% endblock %}

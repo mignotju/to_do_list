@@ -14,9 +14,16 @@ class ControllerListe1 extends Controller
      */
     public function liste1()
     {
+      $task = $this->getDoctrine()
+        ->getRepository('AppBundle:Task')
+        ->findAll();
+
+      //  var_dump($task); die;
+
         return $this->render('tests/liste1.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
+            'tasks' => $task,
         ]);
 
     }
+
 }
