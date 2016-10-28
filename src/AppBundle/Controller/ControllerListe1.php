@@ -14,15 +14,21 @@ class ControllerListe1 extends Controller
      */
     public function liste1()
     {
+      try {
       $task = $this->getDoctrine()
         ->getRepository('AppBundle:Task')
         ->findAll();
 
-      //  var_dump($task); die;
-
         return $this->render('tests/liste1.html.twig', [
             'tasks' => $task,
         ]);
+      } catch(\Exception $e) {
+        var_dump($e->getMessage());
+      }
+
+      //  var_dump($task); die;
+
+
 
     }
 
