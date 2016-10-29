@@ -6,13 +6,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Entity\Task;
 
 class ControllerListe1 extends Controller
 {
      /**
-     * @Route("/liste", name="liste1")
+     * @Route("/liste", name="listeAction")
      */
-    public function liste1()
+    public function listeAction()
     {
       try {
       $task = $this->getDoctrine()
@@ -27,9 +28,25 @@ class ControllerListe1 extends Controller
       }
 
       //  var_dump($task); die;
+    }
 
+    /**
+    * @Route("/liste", name="listeAction")
+    */
+    public function createAction()
+    {
+      $task = new Task();
+      $task->setName('Dire merci à Kévin');
 
+      $em = $this->getDoctrine()->getManager();
 
+      // tells Doctrine you want to (eventually) save the Task (no queries yet)
+      $em->persist($task);
+
+      // actually executes the queries (i.e. the INSERT query)
+      $em->flush();
+
+      return new Response('Saved new task with id '.$task->getId());
     }
 
 }
