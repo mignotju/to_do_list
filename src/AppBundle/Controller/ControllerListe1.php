@@ -12,15 +12,27 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 class ControllerListe1 extends Controller
 {
   /**
-  * @Route("/ajout", name="ajouterAction")
+  * @Route("/todo", name="todoAction")
   */
-  public function ajouterAction(Request $request)
+  public function todoAction(Request $request)
     {
+
+      // Affichage de la liste
+      try {
+      $task = $this->getDoctrine()
+        ->getRepository('AppBundle:Task')
+        ->findAll();
+
+      } catch(\Exception $e) {
+        var_dump($e->getMessage());
+      }
+
+
         // createFormBuilder is a shortcut to get the "form factory"
         // and then call "createBuilder()" on it
 
         $form = $this->createFormBuilder()
-            ->add('task', TextType::class)
+            ->add('Tache', TextType::class)
             ->getForm();
 
         $form->handleRequest($request);
@@ -40,34 +52,36 @@ class ControllerListe1 extends Controller
              // actually executes the queries (i.e. the INSERT query)
              $em->flush();
 
-           return new Response('Saved new task with id '.$task->getId());
+           //return new Response('Saved new task with id '.$task->getId());
+           return $this->redirectToRoute('todoAction');
        }
 
-        return $this->render('tests/ajout.html.twig', array(
+        return $this->render('tests/todolist.html.twig', array(
             'form' => $form->createView(),
+            'tasks' => $task,
         ));
     }
 
 
-     /**
-     * @Route("/liste", name="listeAction")
-     */
-    public function listeAction()
-    {
-      try {
-      $task = $this->getDoctrine()
-        ->getRepository('AppBundle:Task')
-        ->findAll();
-
-        return $this->render('tests/liste1.html.twig', [
-            'tasks' => $task,
-        ]);
-      } catch(\Exception $e) {
-        var_dump($e->getMessage());
-      }
-
-      //  var_dump($task); die;
-    }
+    //  /**
+    //  * @Route("/liste", name="listeAction")
+    //  */
+    // public function listeAction()
+    // {
+    //   try {
+    //   $task = $this->getDoctrine()
+    //     ->getRepository('AppBundle:Task')
+    //     ->findAll();
+    //
+    //     return $this->render('tests/liste1.html.twig', [
+    //         'tasks' => $task,
+    //     ]);
+    //   } catch(\Exception $e) {
+    //     var_dump($e->getMessage());
+    //   }
+    //
+    //   //  var_dump($task); die;
+    // }
 
     // /**
     // * @Route("/ajout", name="createAction")

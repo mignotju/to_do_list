@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+<script src="{{ asset('js/liste1.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+<h2> TO DO Liste : </h2>
+<ul>
+{% for task in tasks %}
+<li>{{task.id}} {{task.name}}</li>
+{% endfor %}
+</ul>
+
+{{ form_start(form) }}
+     {{ form_widget(form) }}
+
+    <input type="submit" value="Ajouter" />
+{{ form_end(form) }}
+
+{% endblock %}
