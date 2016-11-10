@@ -46,8 +46,21 @@ class ControllerListe1 extends Controller
 
              $em = $this->getDoctrine()->getManager();
 
-             // tells Doctrine you want to (eventually) save the Task (no queries yet)
-             $em->persist($task);
+             if (isset($_POST['ajouter'])) {
+               // tells Doctrine you want to (eventually) save the Task (no queries yet)
+               $em->persist($task);
+             } else {
+               $taskId = $data["task"];
+               $task1 = $em->getRepository('AppBundle:Task')->find($taskId);
+               if (!$task1) {
+                 print("hey");
+                  throw $this->createNotFoundException(
+                    'No task found for id '.$taskId
+                  );
+                }
+               $em->remove($task1);
+             }
+
 
              // actually executes the queries (i.e. the INSERT query)
              $em->flush();
